@@ -1,0 +1,361 @@
+<style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            background-color: #f3f4f6;
+            margin: 0;
+            padding: 0;
+            touch-action: manipulation;
+        }
+
+        h1 {
+            margin-top: 15px;
+        }
+
+        .grid {
+    		display: grid;
+    		grid-template-columns: repeat(5, 50px);
+    		row-gap: 7px; /* Vertical spacing */
+    		column-gap: 10px; /* Horizontal spacing */
+    		justify-content: center;
+    		margin-top: 5px;
+		}
+        
+        .gridp {
+    		display: grid;
+    		grid-template-columns: repeat(5, 50px);
+    		row-gap: 6px; /* Vertical spacing */
+    		column-gap: 10px; /* Horizontal spacing */
+    		justify-content: center;
+    		margin-top: 0px;
+		}
+
+        .tile {
+            width: 50px;
+            height: 50px;
+            border: 2px solid #d1d5db;
+            font-size: 1.5rem;
+            font-weight: bold;
+            text-transform: uppercase;
+            text-align: center;
+            line-height: 50px;
+            background-color: white;
+            transition: transform 0.3s ease, background-color 0.3s ease;
+        }
+
+        .tile.revealed {
+            transform: scale(1.1);
+        }
+
+        .tile.scaled {
+            transform: scale(1);
+        }
+
+        .correct {
+            background-color: #6aaa64;
+            color: white;
+            border-color: #6aaa64;
+        }
+
+        .present {
+            background-color: #c9b458;
+            color: white;
+            border-color: #c9b458;
+        }
+
+        .absent {
+            background-color: #787c7e;
+            color: white;
+            border-color: #787c7e;
+        }
+
+        
+
+        .keyboard {
+            display: grid;
+            grid-template-columns: repeat(10, 33px);
+            gap: 5px;
+            justify-content: center;
+            margin-top: 20px;
+        }
+        
+
+        .key {
+            width: 35px;
+            color: black;
+            height: 55px;
+            font-size: 1rem;
+            font-weight: bold;
+            text-align: center;
+            line-height: 40px;
+            background-color: #d1d5db;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        
+        .keyblank {
+        	
+            color: #f3f4f6;
+            border: none;
+            background-color: #f3f4f6;
+            
+        }
+        
+        .keyCorrect {
+        	
+            color: white;
+            
+            background-color: #6aaa64;
+            
+        }
+        
+        .keyPresent {
+        	
+            background-color: #c9b458;
+            color: white;
+            
+        }
+        
+        .keyAbsent {
+        	
+            background-color: #787c7e;
+            color: white;
+            
+        }
+        
+        .keyCorrectP {
+        	
+            color: white;
+            
+            background-color: #6aaa64;
+            
+            display: flex; /* Use flexbox */
+    		align-items: center; 
+    		justify-content: center; /* Center horizontally */
+            
+    		width: 33px;
+    		height: 55px;
+    		font-size: 1rem;
+    		font-weight: bold;
+    		
+    		border: none;
+    		border-radius: 5px;
+    		cursor: pointer;
+    		text-align: center;
+            
+        }
+        
+        .keyPresentP {
+        	
+            background-color: #c9b458;
+            color: white;
+            
+            display: flex; /* Use flexbox */
+    		align-items: center; 
+    		justify-content: center; /* Center horizontally */
+            
+    		width: 33px;
+    		height: 55px;
+    		font-size: 1rem;
+    		font-weight: bold;
+    		
+    		border: none;
+    		border-radius: 5px;
+    		cursor: pointer;
+    		text-align: center;
+            
+        }
+        
+        .keyAbsentP {
+        	
+            background-color: #787c7e;
+            color: white;
+            
+            display: flex; /* Use flexbox */
+    		align-items: center; 
+    		justify-content: center; /* Center horizontally */
+            
+    		width: 33px;
+    		height: 55px;
+    		font-size: 1rem;
+    		font-weight: bold;
+    		
+    		border: none;
+    		border-radius: 5px;
+    		cursor: pointer;
+    		text-align: center;
+            
+        }
+        
+        .keyp {
+    		display: flex; /* Use flexbox */
+    		align-items: center; 
+    		justify-content: center; /* Center horizontally */
+            color: black;
+    		width: 33px;
+    		height: 55px;
+    		font-size: 1rem;
+    		font-weight: bold;
+    		background-color: #d1d5db;
+    		border: none;
+    		border-radius: 5px;
+    		cursor: pointer;
+    		text-align: center;
+		}
+        
+        .key:focus {
+    		outline: none;
+		}
+        
+        .keyp:focus {
+    		outline: none;
+		}
+
+
+        .key:active {
+            background-color: #9ca3af;
+        }
+        
+        .keyp:active {
+            background-color: #9ca3af;
+        }
+
+        .message {
+            margin-top: 20px;
+            font-size: 1.8rem;
+            color: #4b5563;
+        }
+
+        .win {
+            color: #6aaa64;
+            font-weight: bold;
+            animation: win-animation 1s infinite;
+        }
+
+        @keyframes win-animation {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.2); }
+        }
+
+        .lose {
+            color: #ff4d4d;
+            font-weight: bold;
+        }
+        
+        @keyframes flash-red {
+    		0% {
+        		background-color: white; /* Start white */
+    		}
+    		25% {
+        		background-color: #F8B7B1; /* Flash red */
+    		}
+    		50% {
+        		background-color: white; /* Back to white */
+    		}
+    		75% {
+        		background-color: #F8B7B1; /* Flash red again */
+    		}
+    		100% {
+        		background-color: white; /* End with white */
+    		}
+		}
+
+		.tile.flash {
+    		animation: flash-red 0.3s ease-in-out;
+		}
+
+
+        footer {
+        	position: relative;
+    		top: -8px;
+            
+            font-size: 0.9rem;
+            color: #6b7280;
+        }
+
+        footer a {
+            color: #2563eb;
+            text-decoration: none;
+        }
+
+        footer a:hover {
+            text-decoration: underline;
+        }
+        
+        footer d {
+        	color: #b56010;
+            text-decoration: none;
+        }
+        
+        .key, .keyp {
+        	cursor: pointer;
+    	}
+
+    
+    	body, .grid, .tile {
+        	cursor: default;
+            user-select: none;
+    	}
+        
+        @keyframes fadeInNew {
+    		from {
+        		opacity: 0;
+    		}
+    		to {
+        		opacity: 1; 
+    		}
+		}
+        .rectangleBefore{
+        	width: 384px;       
+  			height: 180px;       
+  			background-color: #d1d5db; 
+            position: absolute;
+    		top: 0px; 
+    		left: 50%;
+    		transform: translateX(-50%);
+    		z-index: 9999;
+            border-radius: 40px;
+            opacity: 0;
+        }
+        .rectangle {
+  			width: 384px;       
+  			height: 183px;       
+  			background-color: #d1d5db; 
+            position: absolute;
+    		top: 441px; 
+    		left: 50%;
+    		transform: translateX(-50%);
+    		z-index: 9999;
+            border-radius: 20px;
+            opacity: 0;
+		}
+        
+        .rectanglef {
+  			width: 384px;       
+  			height: 183px;       
+  			background-color: #d1d5db; 
+            position: absolute;
+    		top: 441px; 
+    		left: 50%;
+    		transform: translateX(-50%);
+    		z-index: 9999;
+            border-radius: 20px;
+            opacity: 1;
+		}
+        
+        
+        .rect {
+        	animation: fadeInNew 0.5s ease-in;
+        }
+        
+        .word {
+    		color: green;
+    		font-weight: bold;
+		}
+        .wordf {
+    		color: red;
+    		font-weight: bold;
+		}
+
+</style>
